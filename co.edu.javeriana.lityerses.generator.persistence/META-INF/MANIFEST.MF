@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ZoePersistenceGenerator
-Bundle-SymbolicName: co.edu.javeriana.zoe.generator.persistence;singleton:=true
+Bundle-Name: LityPersistenceGenerator
+Bundle-SymbolicName: co.edu.javeriana.lityerses.generator.persistence;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: co.edu.javeriana.lityerses.generator.persistence.Activator
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
