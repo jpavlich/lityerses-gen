@@ -4,7 +4,7 @@
    <extension
          point="co.edu.javeriana.isml.generator">
       <generatorSuiteClient
-            class="co.edu.javeriana.lityerses.generator.android.ZoeJEE7Generator">
+            class="co.edu.javeriana.lityerses.generator.android.LitiersesGenerator">
       </generatorSuiteClient>
    </extension>
 

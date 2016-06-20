@@ -4,7 +4,7 @@
    <extension
          point="co.edu.javeriana.isml.generator">
       <generatorSuiteClient
-            class="co.edu.javeriana.lityerses.generator.persistence.ZoePersistenceGenerator">
+            class="co.edu.javeriana.lityerses.generator.persistence.LityPersistenceGenerator">
       </generatorSuiteClient>
    </extension>
 
