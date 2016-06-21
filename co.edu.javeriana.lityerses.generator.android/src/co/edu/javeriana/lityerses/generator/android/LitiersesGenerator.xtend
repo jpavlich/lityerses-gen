@@ -8,6 +8,7 @@ import co.edu.javeriana.lityerses.generator.android.generators.LitiersesFacesCon
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesGenerator
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceImplementationGenerator
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceInterfaceGenerator
+import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceServerGenerator
 
 class LitiersesGenerator extends GeneratorSuite{
 	
@@ -31,7 +32,8 @@ class LitiersesGenerator extends GeneratorSuite{
 			new LitiersesFacesConfigXMLGenerator,
 			new LitiersesServiceInterfaceGenerator,
 			new LitiersesServiceImplementationGenerator,			
-			new LitiersesDesignGenerator
+			new LitiersesDesignGenerator,
+			new LitiersesServiceServerGenerator
 		}
 	}
 	
