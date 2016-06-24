@@ -1,0 +1,18 @@
+package controlador;
+
+import entities.* ;
+import pages.* ;
+import services.* ;
+
+controller DietaManager2 {
+	has Servicio1 <Dieta> servicio;
+	
+	
+		
+	deleteDieta(Dieta dieta) {
+		servicio.remove(dieta);
+		
+	}
+
+
+}

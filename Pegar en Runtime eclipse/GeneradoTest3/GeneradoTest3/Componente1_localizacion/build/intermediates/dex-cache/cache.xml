@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-df6a8cce8744f9459834c5522c411cdee9b4f5a3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-f3b13202a417dceae5d5ef44d1700c7c7920b4f8.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="40e7757d9b06db670062ddb3cf5b30c129b2fd8c">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-7b344666d7ce23ddc354a87e78de0e31e18e61e5.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-cc39cb15482ce0f09e911b094001380156ee61ff.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\support-v13\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5ddf5f4817565c9db82613c16093f76640a54e15">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-1e79602be183f1193a9736efe7e66aa598916731.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.4\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="cf251baf39f5c5138224b67b4106eb6331abbd13">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-23da921b6f9fd6c3807efac32e44c8fdeae0eb2c.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\support-v13\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f4d7a07120e76988f3a15403838d323c2400db83">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\internal_impl-23.1.1-67df1d136644bd4080f2f4dbebc16235d9366832.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\internal_impl-23.1.1-40390f7764ac8b34928f9f9ee750da147755206e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\design\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8a5238e4bdcd6568b82db669d41817de670586b8">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-2e261a042502fa7f7ffc3fe98235deb96444c3bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-21245f646bbb121863295b3db6dfe3e705437ff1.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\support-annotations-23.1.1-5f57a95678d6ed54674dd568cdbefcf5dba38b0c.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-bde6cd555e061f16a802b1851a86f4d8491e88a7.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.6.1\86b122e640af09b0723e1fa44083c354ba6d9089\glide-3.6.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="86b122e640af09b0723e1fa44083c354ba6d9089">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\glide-3.6.1-41d6f75f31e1c41592962eafcba200d93959972f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-b3a18a2ddc6ec0ff338821034ca70bcf775bbc53.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\classes-d484c62f2fa06ec037c7708828ee82cb6040eafb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cata\.gradle\caches\modules-2\files-2.1\org.jbundle.util.osgi.wrapped\org.jbundle.util.osgi.wrapped.org.apache.http.client\4.1.2\98c86e42679fe7ac066f6c242e0d14f0bce0bb7c\org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
+        <dex dex="C:\Users\Cata\runtime-EclipseISML\Android_test_2\Android_test_2\Componente1_localizacion\Application\build\intermediates\pre-dexed\debug\org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2-9a4a83c45284f75c128feff8b1626840d586d88f.jar" />
+    </item>
+
+</items>

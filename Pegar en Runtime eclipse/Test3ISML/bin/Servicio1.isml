@@ -1,0 +1,10 @@
+package services;
+
+/**
+ * This service provides the basic methods to access a persistent object storage.
+ * In this context, entities are referred as 'objects'.
+ */
+service Servicio1 < T > {
+
+	native Void remove(T obj);
+}
