@@ -1,0 +1,6 @@
+package entities;
+
+entity Preferencias {
+	String preferencia;
+	
+}

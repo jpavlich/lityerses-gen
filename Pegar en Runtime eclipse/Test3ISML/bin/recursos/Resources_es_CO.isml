@@ -1,0 +1,6 @@
+package recursos;
+
+resourceBundle Resources_es_CO {
+	$desayuno = "Desayuno";
+	$cancel = "Cancelar";
+}

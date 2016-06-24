@@ -1,0 +1,38 @@
+package pages;
+import entities.* ;
+import controlador.* ;
+
+
+page DietaList(Collection<Dieta> dietas) controlledBy DietaManager  {
+  /* 	Form {
+	       Panel("Collection<Dieta>") {
+	       	
+	           DataTable("Collection<Dieta>", null) {
+	               header : {                    
+	                   Label("Desayuno");
+	                   Label("Almuerzo");
+	                   Label("Cena");
+	                   Label("Merienda");
+	                   Label("Patologia");
+	                   Label("View");
+	                   Label("Edit");
+	                   Label("Delete");
+	               }
+	               body : 
+	               for(Dieta dieta in dietas) {
+	               		Label(dieta.desayuno);
+	               		Label(dieta.almuerzo);
+	               		Label(dieta.cena);
+	               		Label(dieta.merienda);
+	               		Label(dieta.patologia);
+	                   	Button("View")-> viewDieta(dieta);
+	                   	Button("Edit") -> editDieta(dieta);
+	                   	Button("Delete") -> deleteDieta(dieta);
+	               }
+
+	           }
+	        	
+		}
+	} */ 
+	
+}

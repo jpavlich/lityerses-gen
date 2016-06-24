@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml"
+	      xmlns:h="http://java.sun.com/jsf/html"
+	      xmlns:f="http://java.sun.com/jsf/core"
+	      xmlns:ui="http://java.sun.com/jsf/facelets"
+	      xmlns:p="http://primefaces.org/ui">
+	    <f:view contentType="text/html">
+	        <h:head>
+	            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	            <link href="../resources/css/paginasControles.css" rel="stylesheet" type="text/css"/>
+	            <title>ZOE-GEN - PRENAT - MISyC</title>
+	        </h:head>
+	        <h:body style="background: #045491" >
+	            <p:layout fullPage="true" style="background: #045491">
+	                <p:layoutUnit position="north" size="100" resizable="false" closable="true" collapsible="true" style="background: #045491">
+	                    <p:layout style="min-width:400px;min-height:200px;">
+	                        <p:layoutUnit position="west" size="300" minSize="40" maxSize="300">
+	
+	                            <ui:include src="headerLogin.xhtml"/>   
+	
+	                        </p:layoutUnit>
+	                        <p:layoutUnit position="center" >
+	                            <div>
+	                                <h:outputLabel for="name" value="Bienvenido a Prenat" style="font-weight:bold" />
+	                            </div>
+	
+	                        </p:layoutUnit>
+	
+	                    </p:layout>
+	                </p:layoutUnit>
+	                <p:layoutUnit position="south" size="100" closable="true" collapsible="true" resizable="false" style="background: #045491">
+	                    <div>
+	                        <h:outputText value="Aplicacion generada con el transformador ZOE-GEN" />
+	                    </div>
+	                    <div>
+	                        <h:outputText value="Maestria en Ingenieria de Sistemas y Computacion" />
+	                    </div>
+	                    <div>
+	                        <h:outputText value="Pontificia Universidad Javeriana" />
+	                    </div>
+	                    <div>
+	                        <h:outputText value="Bogota D.C:" />
+	                    </div>
+	                    <div>
+	                        <h:outputText value="Abril - 2016" />
+	                    </div>
+	                </p:layoutUnit>
+	                <p:layoutUnit position="west" size="200" closable="true" resizable="false" collapsible="true" style="background: #045491" >
+	                    <h:form>
+	                        <p:growl autoUpdate="true"/>
+	                        
+	                                     
+	                            <p:menu  style="width:170px">        
+
+	
+	
+	                                   
+	                                       <p:menuitem value="DietaList" outcome="/co/edu/javeriana/DietaList.xhtml" />
+	                                   
+	                                   
+	                                       <p:menuitem value="Main" outcome="/co/edu/javeriana/Main.xhtml" />
+	                                   
+	                                   
+	                                       <p:menuitem value="DietaAdaptativa" outcome="/co/edu/javeriana/DietaAdaptativa.xhtml" />
+	                                   
+	                                   
+	                                       <p:menuitem value="ViewDieta" outcome="/co/edu/javeriana/ViewDieta.xhtml" />
+	                                   
+	                                   
+	                                       <p:menuitem value="ViewDieta" outcome="/co3/edu/javeriana/ViewDieta.xhtml" />
+	                                   
+	                                   
+	                                       <p:menuitem value="EditDieta" outcome="/co/edu/javeriana/EditDieta.xhtml" />
+	                                   
+	                            </p:menu> 
+	                      
+	                    </h:form>
+	                </p:layoutUnit>
+	                <p:layoutUnit position="center" resizable="false" style="background: #045491">
+	
+	                    <ui:insert name="title"></ui:insert>
+	                    <ui:insert name="content"></ui:insert>  
+	
+	                </p:layoutUnit>
+	            </p:layout>
+	        </h:body>
+	    </f:view>
+	</html>	
+		
+		
