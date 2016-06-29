@@ -37,33 +37,11 @@ class LityServiceGeneralTemplate extends SimpleTemplate<Entity> {
 			import «entiti.value.fullyQualifiedName»;
 		«ENDFOR»
 		
-		
-		import java.util.*;
-		import javax.ejb.Local;
-		import javax.ejb.Stateless;
-		import javax.persistence.EntityManager;	
-		import javax.persistence.PersistenceContext;
-		import co.edu.javeriana.sesion.Persistence;
+
 		import «entity.eContainer?.fullyQualifiedName.toLowerCase».«entity.name.toFirstUpper»;
 
-	
-		@Stateless
 		public class «entity.name.toFirstUpper»__General__ extends Persistence<«entity.name.toFirstUpper»>{
-			    @PersistenceContext(unitName = "co.edu.javeriana.javemovil_javemovil-web_war_1.0-SNAPSHOTPU")
-    			private EntityManager em;
-
-			    @Override
-			    public EntityManager getEntityManager() {
-			        return em;
-			    }
-			
-			    public «entity.name.toFirstUpper»__General__() {
-			        super(«entity.name.toFirstUpper».class);
-			    }
-			
 		}	
-		
-			
 	'''
 
 	def Map<QualifiedName,TypeSpecification> getNeededImportsInMethods(TypeSpecification service) {

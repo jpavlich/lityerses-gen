@@ -232,10 +232,10 @@ class LityEntityTemplate extends SimpleTemplate<Entity> {
 					}
 					final «entity.name» other = («entity.name») obj;
 					if (id == null) {
-						if (other.getId() != null) {
+						if (other.id != null) {
 							return false;
 						}
-					} else if (!id.equals(other.getId())) {
+					} else if (!id.equals(other.id)) {
 						return false;
 					}
 					return true;
