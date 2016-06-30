@@ -43,53 +43,27 @@ class LitiersesServiceInterfaceTemplate extends SimpleTemplate<Service> {
 				import «entity.value.fullyQualifiedName»;
 			«ENDFOR»
 		«ENDFOR»
-		
 		import java.util.*;
-		import javax.ejb.Local;
 		«FOR superType:service.superTypes»
 		import «superType.typeSpecification.fullyQualifiedName»;
 		«ENDFOR»
 		
-		/**
-		 * This interface represents the local instance for the «service.name.toFirstUpper»Bean EJB 
-		 */
-		@Local
 		public interface «service.name.toFirstUpper»«IF !service.genericTypeParameters.empty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.typeSpecificationString.toFirstUpper»«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»{
 			
 			«FOR feature : service.features»
 				«IF feature instanceof Method»
-					/**
-					 * This method executes the proper actions for «feature.name»
-					 «FOR param:feature.parameters»
-					 * @param «param.name.toFirstLower» Parameter from type «param.type.typeSpecification.name.toFirstUpper»
-					 «ENDFOR»
-					 «IF feature.type!=null && !feature.type.typeSpecification.name.equalsIgnoreCase("Void")»
-					 * @return Some «feature.type.writeType(true)» object
-					 «ENDIF»
-					 */
-					public «service.getReplacedType(feature.type).writeType(true)» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.
-			writeType(true)» «parameter.name.toFirstLower»«ENDFOR»);
+					public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»);
+
 				«ELSE»
 					«IF feature instanceof Attribute»
-						/**
-						 * Returns the current value for the attribute «feature.name»
-						 *
-						 * @return Some «feature.type.writeType(true)» object
-						 */
 						public «service.getReplacedType(feature.type).writeType(true)» get«feature.name.toFirstUpper»();
 						
-						/**
-						 * Sets the value for the attribute «feature.name»
-						 *
-						 * @param «feature.name.toFirstLower» The value to set
-						 */
 						public void set«feature.name.toFirstUpper»(«service.getReplacedType(feature.type).writeType(true)» «feature.name.toFirstLower»);
 					«ENDIF»
 				«ENDIF»				
 			«ENDFOR»	
 		}	
 		
-			
 	'''
  /**
   * 
