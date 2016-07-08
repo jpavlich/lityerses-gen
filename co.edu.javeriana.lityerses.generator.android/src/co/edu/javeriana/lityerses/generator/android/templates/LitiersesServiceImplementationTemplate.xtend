@@ -66,7 +66,7 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 		public class «service.name.toFirstUpper»Impl«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.name.toFirstUpper»«IF service.superTypes.get(0).typeSpecification instanceof Service»Impl«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»«ENDIF» implements «service.name.toFirstUpper»«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF»,Serializable{
 		
 			«FOR gen:service.genericTypeParameters»
-				private Class<«gen.name»> clazz«gen.name»Object;
+				public Class<«gen.name»> clazz«gen.name»Object;
 			«ENDFOR»
 			«FOR type : service.superTypes»	
 				«FOR attr : type.typeSpecification.features»
@@ -126,12 +126,9 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 							ListaNombreParametrosEntrada=ListaNombreParametrosEntrada+parameter.name.toFirstLower
 							ListaParametrosEntrada=ListaParametrosEntrada+parameter.type.writeType(true)+' '+parameter.name.toFirstLower
 								
-						}»«
-						if (parametroEntrada==false){
-							(ListaTipoParametrosEntrada = 'Void');
-							(ListaTipoParametrosEntrada_ = 'Void');
-						}
-						»«
+						}»«for (var i=0; i<1;i++){if (parametroEntrada==false){
+							ListaTipoParametrosEntrada = 'Void'
+							ListaTipoParametrosEntrada_ = 'Void'}}»«
 				/*VARIABLES: */
 					»
 					
@@ -190,8 +187,9 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 							for (int i = 0; i < json_retorno.length(); i++) {
 								JSONObject c = json_retorno.getJSONObject(i);
 								Gson gson = new Gson();
-								Type collectionType = new TypeToken<PersistenceImpl<T>>(){}.getType();
-								T objeto = gson.fromJson(c.toString(), collectionType);
+								//si es coleccion
+								Type retornoType = (Type) clazzTObject;
+								T objeto = gson.fromJson(c.toString(),retornoType);
 								retorno.add(objeto);
 							}
 							«ENDIF»

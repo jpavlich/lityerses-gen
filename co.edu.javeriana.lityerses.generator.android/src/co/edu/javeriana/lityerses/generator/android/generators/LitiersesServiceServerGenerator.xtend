@@ -15,7 +15,7 @@ class LitiersesServiceServerGenerator extends SimpleGenerator<Service> {
 	}
 
 	override getOutputConfigurationName() {
-		LitiersesGenerator.SERVICE_INTERFACE
+		LitiersesGenerator.SERVICE_SERVER
 	}
 	
 	override getTemplate() {

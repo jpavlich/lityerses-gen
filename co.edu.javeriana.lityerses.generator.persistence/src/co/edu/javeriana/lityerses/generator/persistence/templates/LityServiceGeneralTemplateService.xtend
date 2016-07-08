@@ -17,7 +17,7 @@ import java.util.Map
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 
-class LityServiceGeneralTemplate extends SimpleTemplate<Entity> {
+class LityServiceGeneralTemplateService extends SimpleTemplate<Entity> {
 
 	@Inject extension IQualifiedNameProvider
 	@Inject extension IsmlModelNavigation
@@ -31,19 +31,36 @@ class LityServiceGeneralTemplate extends SimpleTemplate<Entity> {
 	// TODO Implement hashCode and equals, based in the unique keys of the entity
 	/*	@«constraint.type.typeSpecification.typeSpecificationString»(«FOR Expression ex : constraint.parameters SEPARATOR ","»«ex.toString.length»«ENDFOR»)*/
 	override def CharSequence template(Entity entity) '''
-		package «entity.eContainer?.fullyQualifiedName.toLowerCase».services;		
+		package ws.service;				
 		
+		import java.util.List;
+		import javax.ejb.Stateless;
+		import javax.persistence.EntityManager;
+		import javax.persistence.PersistenceContext;
+		import javax.ws.rs.Consumes;
+		import javax.ws.rs.POST;
+		import javax.ws.rs.Path;
+		import javax.ws.rs.PathParam;
+		import javax.ws.rs.Produces;
+		import ws.«entity.name.toFirstUpper»;		
 		«FOR entiti : getNeededImportsInMethods(entity).entrySet»
 			import «entiti.value.fullyQualifiedName»; 
 		«ENDFOR»
-		import «entity.eContainer?.fullyQualifiedName.toLowerCase».«entity.name.toFirstUpper»;
-		import common.services.impl.PersistenceImpl;
-
-		public class «entity.name.toFirstUpper»__General__ extends PersistenceImpl<«entity.name.toFirstUpper»>{
+		
+		@Stateless
+		@Path("ws.persistence_«entity.name.toFirstUpper»")
+		public class Persistence_«entity.name.toFirstUpper»_ extends PersistenceFacade<«entity.name.toFirstUpper»> {
+			@PersistenceContext(unitName = "webservicesPU")
+			private EntityManager em;
 			
-			public «entity.name.toFirstUpper»__General__(){
-			        clazzTObject = «entity.name.toFirstUpper».class;
-			    }
+			public Persistence_«entity.name.toFirstUpper»_(){
+			        super(«entity.name.toFirstUpper».class);
+			}
+			
+			@Override
+			protected EntityManager getEntityManager() {
+				return em;
+			}
 		}	
 	'''
 

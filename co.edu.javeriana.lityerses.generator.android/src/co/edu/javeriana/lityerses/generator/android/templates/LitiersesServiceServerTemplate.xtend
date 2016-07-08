@@ -29,23 +29,58 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 		import java.util.List;
 		import javax.ejb.Stateless;
 		import javax.ws.rs.Consumes;
-		import javax.ws.rs.GET;
+		import javax.ws.rs.POST;
 		import javax.ws.rs.Path;
 		import javax.ws.rs.PathParam;
 		import javax.ws.rs.Produces;
 
 		@Stateless
-		@Path("ws.«service.name.toFirstUpper»")
+		@Path("ws.«service.name.toLowerCase»")
 		
-		public class «service.name.toFirstUpper» {
+		public class «service.name.toFirstUpper»Impl«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.name.toFirstUpper»«IF service.superTypes.get(0).typeSpecification instanceof Service»Impl«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»«ENDIF» implements «service.name.toFirstUpper»«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF»{ 
 			
 			«FOR feature : service.features»
-				«IF feature instanceof Method»
-					@GET
-					@Path("«feature.name»")
-					Produces({"application/json"})  
-					public «service.getReplacedType(feature.type).writeType(true)» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.
-			writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
+				«IF feature instanceof Method»«
+			/*VARIABLES: */
+				val ParametroRetorno_tipoCompleto = (service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")»«
+				val ParametroRetorno_tipo = (service.getReplacedType(feature.type).writeType(false)).replace("Array","ArrayList")»«
+				var ListaTipoParametrosEntrada = ''»«
+				var ListaTipoParametrosEntrada_ = ''»«
+				var ListaNombreParametrosEntrada = ''»«
+				var ListaParametrosEntrada = ''»«
+				var parametroEntrada = false»«
+					»«var tempInicio=true  »«
+					»«for (parameter : feature.parameters) {
+						if (!tempInicio==true){
+							ListaTipoParametrosEntrada=ListaTipoParametrosEntrada+','
+							ListaTipoParametrosEntrada_=ListaTipoParametrosEntrada_+','
+							ListaNombreParametrosEntrada =ListaNombreParametrosEntrada+','
+							ListaParametrosEntrada =ListaParametrosEntrada+','
+							
+						}
+						else{
+							tempInicio=false
+						}
+						parametroEntrada = true
+						ListaTipoParametrosEntrada=ListaTipoParametrosEntrada+parameter.type.writeType(true)
+						ListaTipoParametrosEntrada_=ListaTipoParametrosEntrada_+parameter.type.writeType(true)
+						ListaNombreParametrosEntrada=ListaNombreParametrosEntrada+parameter.name.toFirstLower
+						ListaParametrosEntrada=ListaParametrosEntrada+parameter.type.writeType(true)+' '+parameter.name.toFirstLower
+							
+					}»«for (var i=0; i<1;i++){if (parametroEntrada==false){
+						ListaTipoParametrosEntrada = 'Void'
+						ListaTipoParametrosEntrada_ = 'Void'}}»«
+			/*VARIABLES: */
+				»
+					@POST
+					@Path("ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»")
+					«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
+					@Produces({"application/json"})
+					«ENDIF»
+					«IF parametroEntrada==true»
+					@Consumes({"application/json"})	
+					«ENDIF»	
+					public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","List")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
 					
 						//Sección para implementar el método
 					}

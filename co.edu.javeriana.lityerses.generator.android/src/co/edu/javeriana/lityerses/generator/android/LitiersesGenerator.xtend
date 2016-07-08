@@ -23,6 +23,9 @@ class LitiersesGenerator extends GeneratorSuite{
 	
 	@OutputConfiguration
 	public static final String SERVICE_IMPL = "service.impl"
+	
+	@OutputConfiguration
+	public static final String SERVICE_SERVER = "service.server"
 		
 
 	override getGenerators() {
