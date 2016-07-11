@@ -5,31 +5,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
   
      			
-     					<class>entities.Preferencias</class>
-     			
-     			
-     			
-     					<class>entities.Dieta</class>
-     			
-     			
-     			
-     					<class>co2.edu.javeriana.entities.Dieta</class>
-     			
-     			
-     			
-     					<class>co.edu.javeriana.entities.Dieta</class>
-     			
-     			
-     			
-     					<class>co.edu.javeriana.entities.Preferencias</class>
-     			
-     			
-     			
-     					<class>co3.edu.javeriana.Preferencias</class>
-     			
-     			
-     			
-     					<class>co.edu.javeriana.entities.Lugares</class>
+     					<class>com.litierses.entities.Dieta</class>
      			
      			
     <exclude-unlisted-classes>true</exclude-unlisted-classes>

@@ -11,7 +11,7 @@ class LitiersesServiceServerGenerator extends SimpleGenerator<Service> {
 	@Inject extension IQualifiedNameProvider
 
 	override getFileName(Service e) {
-		return e.eContainer?.fullyQualifiedName.toString("/").toLowerCase + "/"+ "server" +"/" +e.name.toFirstUpper + ".java"
+		return e.name.toFirstUpper + "Facade.java"
 	}
 
 	override getOutputConfigurationName() {

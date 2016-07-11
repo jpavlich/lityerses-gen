@@ -65,6 +65,7 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 		
 		public class «service.name.toFirstUpper»Impl«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.name.toFirstUpper»«IF service.superTypes.get(0).typeSpecification instanceof Service»Impl«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»«ENDIF» implements «service.name.toFirstUpper»«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF»,Serializable{
 		
+			public String urlWebservice;
 			«FOR gen:service.genericTypeParameters»
 				public Class<«gen.name»> clazz«gen.name»Object;
 			«ENDFOR»
@@ -157,7 +158,7 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 					
 					protected «ParametroRetorno_tipoCompleto.toFirstUpper» doInBackground(«ListaTipoParametrosEntrada»... args) {
 						String params = "";
-						String url_servicio = acceso_BD.server+"ws.ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»/";
+						String url_servicio = urlWebservice+"ws.ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»/";
 						JSONArray json_retorno = null;
 						«//SI HAY PARAMETROS DE ENTRADA
 						IF parametroEntrada==true»

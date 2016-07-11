@@ -1,0 +1,12 @@
+package com.litierses.entities;
+
+entity Dieta {
+
+    String nombre;
+    String desayuno;
+    String almuerzo;
+    String cena;
+    String merienda;
+    //Integer patologia;
+	
+}

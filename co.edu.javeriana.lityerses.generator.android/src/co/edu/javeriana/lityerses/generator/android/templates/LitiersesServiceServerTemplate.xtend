@@ -27,17 +27,21 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 		package  ws.service;		
 				
 		import java.util.List;
-		import javax.ejb.Stateless;
+		import javax.persistence.EntityManager;
 		import javax.ws.rs.Consumes;
 		import javax.ws.rs.POST;
 		import javax.ws.rs.Path;
-		import javax.ws.rs.PathParam;
 		import javax.ws.rs.Produces;
 
-		@Stateless
-		@Path("ws.«service.name.toLowerCase»")
-		
-		public class «service.name.toFirstUpper»Impl«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.name.toFirstUpper»«IF service.superTypes.get(0).typeSpecification instanceof Service»Impl«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»«ENDIF» implements «service.name.toFirstUpper»«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF»{ 
+		«/*public abstract class «service.name.toFirstUpper»Facade«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.name.toFirstUpper»«IF service.superTypes.get(0).typeSpecification instanceof Service»Impl«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»«ENDIF» implements «service.name.toFirstUpper»«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF»{*/» 
+		public abstract class «service.name.toFirstUpper»Facade«IF !service.genericTypeParameters.isEmpty»<«FOR param:service.genericTypeParameters SEPARATOR ','»«param.name»«ENDFOR»>«ENDIF» «IF !service.superTypes.empty»extends «service.superTypes.get(0).typeSpecification.name.toFirstUpper»«IF service.superTypes.get(0).typeSpecification instanceof Service»Impl«IF service.superTypes.get(0)instanceof ParameterizedType»<«FOR param: (service.superTypes.get(0)as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»>«ENDIF»«ENDIF»«ENDIF» {
+			private Class<T> entityClass;
+			
+			public PersistenceFacade(Class<T> entityClass) {
+			        this.entityClass = entityClass;
+			    }
+			
+			protected abstract EntityManager getEntityManager();    
 			
 			«FOR feature : service.features»
 				«IF feature instanceof Method»«
@@ -72,19 +76,19 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 						ListaTipoParametrosEntrada_ = 'Void'}}»«
 			/*VARIABLES: */
 				»
-					@POST
-					@Path("ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»")
-					«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
-					@Produces({"application/json"})
-					«ENDIF»
-					«IF parametroEntrada==true»
-					@Consumes({"application/json"})	
-					«ENDIF»	
-					public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","List")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
+				@POST
+				@Path("ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»")
+				«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
+				@Produces({"application/json"})
+				«ENDIF»
+				«IF parametroEntrada==true»
+				@Consumes({"application/json"})	
+				«ENDIF»	
+				public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","List")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
+					//Sección para implementar el método
 					
-						//Sección para implementar el método
-					}
-					
+				}
+				
 				«ENDIF»				
 			«ENDFOR»	
 		}	

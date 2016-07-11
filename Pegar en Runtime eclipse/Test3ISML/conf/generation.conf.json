@@ -35,7 +35,7 @@
 			},
 			{
 				name: "service.interface",
-				outputDirectory:"../GeneradoTest3/GeneradoTest3/",
+				outputDirectory:"../GeneradoTest3/GeneradoTest3/ANDROID/Componente1_localizacion/Application/src/main/java/",
 				createOutputDirectory:true,
 				cleanUpDerivedResources:true,
 				overrideExistingResources:true,
@@ -48,17 +48,30 @@
 			},
 			{
 				name: "service.impl",
-				outputDirectory: "../GeneradoTest3/GeneradoTest3/",
+				outputDirectory: "../GeneradoTest3/GeneradoTest3/ANDROID/Componente1_localizacion/Application/src/main/java/",
 				createOutputDirectory:true,
-				cleanUpDerivedResources:false,			
-				overrideExistingResources:false,
-				setDerivedProperty:false,
+				cleanUpDerivedResources:true,
+				overrideExistingResources:true,
+				setDerivedProperty:true,
 				canClearOutputDirectory:false,
 				installDslAsPrimarySource:false,
 				hideSyntheticLocalVariables:true,
 				keepLocalHistory:false,
 				useOutputPerSourceFolder:false
-			}			
+			},
+			{
+				name: "service.server",
+				outputDirectory: "../GeneradoTest3/GeneradoTest3/SERVIDOR/webservices/src/java/ws/service",
+				createOutputDirectory:true,
+				cleanUpDerivedResources:true,
+				overrideExistingResources:true,
+				setDerivedProperty:true,
+				canClearOutputDirectory:false,
+				installDslAsPrimarySource:false,
+				hideSyntheticLocalVariables:true,
+				keepLocalHistory:false,
+				useOutputPerSourceFolder:false
+			}				
 		]
 	},
 
@@ -105,7 +118,7 @@
 		[
 			{
 				name: "entities",
-				outputDirectory:"../GeneradoTest3/GeneradoTest3/",				
+				outputDirectory:"../GeneradoTest3/GeneradoTest3/ANDROID/Componente1_localizacion/Application/src/main/java/",				
 				createOutputDirectory:true,
 				cleanUpDerivedResources:true,
 				overrideExistingResources:true,
@@ -131,8 +144,7 @@
 			},
 			{
 				name: "service.general",
-				outputDirectory:"../GeneradoTest3/GeneradoTest3/",
-				
+				outputDirectory:"../GeneradoTest3/GeneradoTest3/ANDROID/Componente1_localizacion/Application/src/main/java/",
 				createOutputDirectory:true,
 				cleanUpDerivedResources:true,
 				overrideExistingResources:true,
@@ -145,6 +157,25 @@
 				
 				
 			},
+			{
+				name: "service.server",
+				outputDirectory: "../GeneradoTest3/GeneradoTest3/SERVIDOR/webservices/src/java/ws/service",
+				createOutputDirectory:true,
+				cleanUpDerivedResources:true,
+				overrideExistingResources:true,
+				setDerivedProperty:true,
+				canClearOutputDirectory:false,
+				installDslAsPrimarySource:false,
+				hideSyntheticLocalVariables:true,
+				keepLocalHistory:false,
+				useOutputPerSourceFolder:false
+				
+				
+			},
+			
+			
+			
+			
 			{
 			    name: "persistencexml",
 				outputDirectory:"../GeneradoTest3/GeneradoTest3/",

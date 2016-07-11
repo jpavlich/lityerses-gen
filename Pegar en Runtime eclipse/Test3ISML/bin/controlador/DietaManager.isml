@@ -1,6 +1,6 @@
 package controlador;
 
-import entities.* ;
+import com.litierses.entities.* ;
 import pages.* ;
 
 controller DietaManager {
@@ -52,7 +52,8 @@ controller DietaManager {
 	* @param dieta the Dieta to save.
 	*/			
 	saveDieta(Dieta dieta) {
-	if(persistence.isPersistent(dieta)){
+	//if(persistence.isPersistent(dieta)){
+    if(1==1){
 		persistence.save(dieta);
 	} else {
 		persistence.create(dieta);

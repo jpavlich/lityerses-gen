@@ -21,8 +21,6 @@
   <semanticResources>controller/com/litierses/controlador/TouristAttractionsNew2.isml</semanticResources>
   <semanticResources>view/recursos/Resources.isml</semanticResources>
   <semanticResources>view/recursos/Resources_es_CO.isml</semanticResources>
-  <semanticResources>model/entities/Dieta.isml</semanticResources>
-  <semanticResources>model/entities/Preferencias.isml</semanticResources>
   <semanticResources>controller/controlador/DietaManager.isml</semanticResources>
   <semanticResources>view/pages/DietaList.isml</semanticResources>
   <semanticResources>view/pages/EditDieta.isml</semanticResources>
@@ -50,4 +48,6 @@
   <semanticResources>platform:/resource/PrenatISML/view/co/edu/javeriana/prenat/view/SelectDietaToAdd.isml</semanticResources>
   <semanticResources>platform:/resource/PrenatISML/view/co/edu/javeriana/prenat/view/SelectDietaToAssign.isml</semanticResources>
   <semanticResources>controller/controlador/DietaManager2.isml</semanticResources>
+  <semanticResources>platform:/resource/co.edu.javeriana.isml.common/services/common/services/Convert.isml</semanticResources>
+  <semanticResources>model/com/litierses/entities/Dieta.isml</semanticResources>
 </viewpoint:DAnalysis>

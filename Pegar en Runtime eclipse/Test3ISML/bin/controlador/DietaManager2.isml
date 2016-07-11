@@ -1,11 +1,11 @@
 package controlador;
 
-import entities.* ;
+import com.litierses.entities.* ;
 import pages.* ;
-import services.* ;
+import com.litierses.services.* ;
 
 controller DietaManager2 {
-	has Servicio1 <Dieta> servicio;
+	has Servicio2 <Dieta> servicio;
 	
 	
 		

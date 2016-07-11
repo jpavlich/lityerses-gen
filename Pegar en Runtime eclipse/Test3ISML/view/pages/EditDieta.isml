@@ -1,5 +1,5 @@
 package pages;
-import entities.* ;
+import com.litierses.entities.* ;
 import controlador.* ;
 
 page EditDieta(Dieta dieta) controlledBy DietaManager  {

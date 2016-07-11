@@ -38,11 +38,13 @@ class LityServiceGeneralTemplate extends SimpleTemplate<Entity> {
 		«ENDFOR»
 		import «entity.eContainer?.fullyQualifiedName.toLowerCase».«entity.name.toFirstUpper»;
 		import common.services.impl.PersistenceImpl;
+		import com.litierses.Utilidades.acceso_BD;
 
 		public class «entity.name.toFirstUpper»__General__ extends PersistenceImpl<«entity.name.toFirstUpper»>{
 			
 			public «entity.name.toFirstUpper»__General__(){
 			        clazzTObject = «entity.name.toFirstUpper».class;
+			        urlWebservice = acceso_BD.server+"ws.persistence_«entity.name.toFirstUpper»/";
 			    }
 		}	
 	'''

@@ -1,0 +1,64 @@
+package com.litierses.entities;
+	
+import java.io.Serializable;			
+
+public  class Dieta implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public Long id = null;
+	public String nombre;
+	public String desayuno;
+	public String almuerzo;
+	public String cena;
+	public String merienda;
+		
+
+	public Dieta(){ }
+	public Dieta (String nombre,String desayuno,String almuerzo,String cena,String merienda){
+		this.nombre = nombre;
+		this.desayuno = desayuno;
+		this.almuerzo = almuerzo;
+		this.cena = cena;
+		this.merienda = merienda;
+		}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Dieta)) {
+			return false;
+		}
+		final Dieta other = (Dieta) obj;
+		if (id == null) {
+			if (other.id != null) {
+			return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+
+			int hash = 0;
+			hash += (id != null ? id.hashCode() : 0);
+      				return hash;
+	}	
+	        
+	
+	 @Override
+    		public String toString() {
+        			return "com.litierses.entities.Dieta [ id=" + id + " ]";
+    		}
+		
+	}
