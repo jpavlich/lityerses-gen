@@ -85,7 +85,12 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 				@Consumes({"application/json"})	
 				«ENDIF»	
 				public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","List")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
+				
 					//Sección para implementar el método
+					
+					«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
+					return null;
+					«ENDIF»
 					
 				}
 				

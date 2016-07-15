@@ -158,7 +158,7 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 					
 					protected «ParametroRetorno_tipoCompleto.toFirstUpper» doInBackground(«ListaTipoParametrosEntrada»... args) {
 						String params = "";
-						String url_servicio = urlWebservice+"ws.ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»/";
+						String url_servicio = urlWebservice+"ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»/";
 						JSONArray json_retorno = null;
 						«//SI HAY PARAMETROS DE ENTRADA
 						IF parametroEntrada==true»

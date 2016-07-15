@@ -43,11 +43,12 @@ class ReferenceTemplate {
 		«reference.method.name»(«FOR parameter : reference.parameters SEPARATOR ','»«writeExpression(parameter)»«ENDFOR»)'''
 
 
-
+	//ACCION DE RETORNO EN ISML ->
 	def dispatch CharSequence writeReference(ActionCall reference) '''		
 		«IF reference.findAncestor(Controller) != null
-			»return «ENDIF»«IF !(reference.action.eContainer as Controller).name.equals((reference.findAncestor(Controller)as Controller).name)»«(reference.action.eContainer as Controller).name.toFirstLower».«ENDIF»«reference.
-			action.name»(«FOR parameter : validateParameterForActionCall(reference) SEPARATOR ','»«writeExpression(parameter)»«ENDFOR»)'''
+			//»return «ENDIF»«IF !(reference.action.eContainer as Controller).name.equals((reference.findAncestor(Controller)as Controller).name)»«(reference.action.eContainer as Controller).name.toFirstLower».«ENDIF»«reference.
+			» «ENDIF»«IF !(reference.action.eContainer as Controller).name.equals((reference.findAncestor(Controller)as Controller).name)»«(reference.action.eContainer as Controller).name.toFirstLower».«ENDIF»«reference.
+			action.name»(activity«FOR parameter : validateParameterForActionCall(reference) SEPARATOR ','»,«writeExpression(parameter)»«ENDFOR»)'''
 
 	def dispatch CharSequence writeReference(ResourceReference reference) '''
 		"#{messages['«reference.referencedElement.name.substring(1)»']}"'''
@@ -107,7 +108,9 @@ class ReferenceTemplate {
 				if(retData.get(0)as Boolean){
 					cast="("+retData.get(1).toString+")"
 				}
-				str = "this." + param.name + "="+cast+ str
+				// parametro de un metodo del controlador
+				//str = "this." + param.name + "="+cast+ str
+				str = cast+ str
 			} else {
 				return ""
 			}

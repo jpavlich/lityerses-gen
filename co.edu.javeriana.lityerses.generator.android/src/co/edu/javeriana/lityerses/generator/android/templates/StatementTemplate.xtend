@@ -36,22 +36,19 @@ class StatementTemplate {
 	/**
 	 * Este método escribe los Statement contenidos en un Body
 	 */
-	def CharSequence writeStatements(EList<MethodStatement> body) '''		
-		«FOR statement : body»
+	def CharSequence writeStatements(EList<MethodStatement> body) 		
+		'''«FOR statement : body»
 			«writeStatement(statement as MethodStatement)»	
-		«ENDFOR»
-		
-	'''
+		«ENDFOR»'''
 
-	def dispatch CharSequence writeStatement(Reference statement) '''
-		«writeReference(statement)»;
-	'''
+	def dispatch CharSequence writeStatement(Reference statement) 
+		'''«writeReference(statement)»;	'''
 
-	def dispatch CharSequence writeStatement(While statement) '''
-		while(«writeExpression(statement.condition)»){
+	def dispatch CharSequence writeStatement(While statement) 
+		'''while(«writeExpression(statement.condition)»){
 			«writeStatements(statement.body)»
-		}
-	'''
+		}'''
+	
 
 	def dispatch CharSequence writeStatement(
 		If statement) '''
@@ -62,7 +59,7 @@ class StatementTemplate {
 		}«ELSE»
 				«IF statement.findAncestor(Action) != null»
 					«IF statement.isUniqueStatement»
-						return "";
+						 "";
 					«ENDIF»
 				«ENDIF»
 		«ENDIF»
@@ -90,20 +87,17 @@ class StatementTemplate {
 		«ENDIF»
 		
 	'''
-
-	def dispatch CharSequence writeStatement(Show statement) '''
-		«FOR param : (statement.expression as Instance).parameters»
-			«IF !(param instanceof NullValue) »
-				«writeExpression(param)»;
-			«ENDIF»			
-		«ENDFOR»		
-		return "goTo«(statement.expression as Instance).type.typeSpecification.typeSpecificationString.toFirstUpper»";		
-	'''
+	//PAGE
+	def dispatch CharSequence writeStatement(Show statement) 
+		//'''«(statement.expression as Instance).type.typeSpecification.typeSpecificationString.toFirstUpper»_Activity.launch(activity«FOR param : (statement.expression as Instance).parameters»«IF !(param instanceof NullValue) »,«writeExpression(param)»«ENDIF»«ENDFOR»);'''		
+		'''«(statement.expression as Instance).type.typeSpecification.typeSpecificationString.toFirstUpper»_Activity.launch(activity«FOR param : (statement.expression as Instance).parameters»«IF !(param instanceof NullValue) »,«writeExpression(param)»«ENDIF»«ENDFOR»);'''
+	
 
 	def dispatch CharSequence writeStatement(
-		Return statement) '''
-		return «IF statement.expression != null»«writeExpression(statement.expression)»«ENDIF»;
-	'''
+		Return statement) 
+		//'''return «IF statement.expression != null»«writeExpression(statement.expression)»«ENDIF»;'''
+		'''«IF statement.expression != null»«writeExpression(statement.expression)»«ENDIF»;'''
+	
 
 	def dispatch CharSequence writeStatement(
 		Assignment statement

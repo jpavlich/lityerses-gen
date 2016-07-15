@@ -37,7 +37,7 @@ class ExpressionTemplate {
 				if (entry.value.typeSpecification.typeSpecificationString.equals(
 					expression.type.typeSpecification.typeSpecificationString)) {
 
-					text += "this." + entry.key + "=" 
+					text += "this2." + entry.key + "=" 
 				}
 			}
 		}
