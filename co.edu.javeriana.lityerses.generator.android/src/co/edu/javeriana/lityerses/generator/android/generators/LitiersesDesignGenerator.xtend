@@ -18,7 +18,7 @@ class LitiersesDesignGenerator  extends SimpleGenerator<List<Page>>{
 	}
 	
 	override getTemplate() {
-		return new LitiersesDesignTemplate
+		//return new LitiersesDesignTemplate
 	}
 		
 }

@@ -17,7 +17,7 @@ class LitiersesFacesConfigXMLGenerator  extends SimpleGenerator<List<Page>>{
 	}
 	
 	override getTemplate() {
-		return new LitiersesFacesConfigXMLTemplate
+		//return new LitiersesFacesConfigXMLTemplate
 	}
 		
 }

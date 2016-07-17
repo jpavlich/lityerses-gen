@@ -22,6 +22,10 @@ import java.util.LinkedHashMap
 import java.util.Map
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.naming.IQualifiedNameProvider
+import co.edu.javeriana.isml.isml.impl.ImportImpl
+import co.edu.javeriana.isml.isml.Instance
+import co.edu.javeriana.isml.isml.impl.ViewInstanceImpl
 
 /**
  * Clase para generar paginas con elementos graficos del framework prime faces 5.1
@@ -34,6 +38,8 @@ class LitiersesPagesTemplate extends SimpleTemplate<Page> {
 	@Inject extension TypeChecker
 	@Inject extension IsmlModelNavigation	
 	@Inject extension ExpressionTemplate
+	@Inject extension IQualifiedNameProvider
+	@Inject extension StatementTemplate
 	int i;
 	Map<ViewInstance,String> forms
 	
@@ -50,33 +56,71 @@ class LitiersesPagesTemplate extends SimpleTemplate<Page> {
  * Metodo que retorna la plantilla para  paginas con elementos graficos del framework prime faces 
  * 
  */
-	override def CharSequence template(Page page) '''
-		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-		<html xmlns="http://www.w3.org/1999/xhtml"
-		xmlns:ui="http://java.sun.com/jsf/facelets"
-		xmlns:f="http://java.sun.com/jsf/core"
-		xmlns:h="http://java.sun.com/jsf/html"
-		xmlns:c="http://java.sun.com/jsp/jstl/core"
-		xmlns:p="http://primefaces.org/ui">	
-		
+	override def CharSequence template(Page page) '''	
+	package «(page.eContainer.fullyQualifiedName)»;
+	import android.app.Activity;
+	import android.content.Context;
+	import android.content.Intent;
+	import android.os.Bundle;
+	import android.support.v7.app.AppCompatActivity;
+	import java.io.Serializable;
+	import com.example.android.xyztouristattractions.R;
+	«FOR imports : page.eContainer.eContents /*Se importan los imports de la pagina isml */»
+		«IF imports.class == ImportImpl»
+			import  «imports.cast(ImportImpl).importedPackage.name».*;
+		«ENDIF»
+	«ENDFOR»
+	import android.view.Menu;
+	import android.view.MenuItem;
+	import android.widget.Toast;
+	import java.util.ArrayList;
 	
-	   <ui:define name="metadata">
-				<f:metadata>
-						<f:event type="preRenderView" listener="#{«page.containerController.name.toFirstLower».init()}" />
-				</f:metadata>
-		</ui:define>
-			
-		<ui:composition template="/template.xhtml">
-		<ui:define name="content">
-			«IF page.body != null»
-			«widgetTemplate(page.body)»
-			«ENDIF»				
-			</ui:define>			
-		</ui:composition>	
+	public class «(page.name)»_Activity extends AppCompatActivity {
 		
-	</html>	
+		private static final String EXTRA_OBJECT = "«(page.name)»_object";
 		
+		    public static void launch(Activity activity«FOR param : page.parameters»,«IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF» «(param.name)»«ENDFOR») {
+		        Intent intent = getLaunchIntent(activity«FOR param : page.parameters», «(param.name)»«ENDFOR»);
+		        activity.startActivity(intent);
+		    }
+		    
+		    public static Intent getLaunchIntent(Context context«FOR param : page.parameters»,«IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF» «(param.name)»«ENDFOR») {
+		         Intent intent = new Intent(context, «(page.name)»_Activity.class);
+		         intent.putExtra(EXTRA_OBJECT «FOR param : page.parameters», (Serializable) «(param.name)»«ENDFOR»);
+		         return intent;
+		     }
+		     
+		     @Override
+		     protected void onCreate(Bundle savedInstanceState) {
+	             super.onCreate(savedInstanceState);
+	             setContentView(R.layout.«(page.name).toLowerCase»_activity);
+	             «FOR param : page.parameters»
+	             «IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF» «(param.name)» = («IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF») getIntent().getSerializableExtra(EXTRA_OBJECT);
+	             «ENDFOR»
+				 «FOR method : page.containerController.actions»
+	  			 	«IF method.^default»
+		 		 		«IF !method.showStatements.empty»
+		 		 			«FOR sta : method.showStatements»
+		 		 				«IF sta.expression.class== ViewInstanceImpl»
+		 		 					«IF (page.name).equals((sta.expression as Instance).type.typeSpecification.typeSpecificationString.toFirstUpper)»
+// Invocación del método por default del controlador
+			 if («FOR param : page.parameters»«(param.name)»«ENDFOR» == null) { «page.containerController.name».«method.name»(this); }
+		 		 					«ENDIF»
+		 		 				«ENDIF»	
+		 		 			«ENDFOR»
+		 		 		«ENDIF»
+	 			 	«ENDIF»
+ 				 «ENDFOR»
+	             if (savedInstanceState == null) {
+	                 getSupportFragmentManager().beginTransaction()
+	                         .add(R.id.container, «(page.name)»_Fragment.createInstance(«FOR param : page.parameters SEPARATOR ','»«(param.name)»«ENDFOR»))
+	                         .commit();
+	             }
+	         }
+	}
 	'''
+	
+	
 	
 	def dispatch CharSequence widgetTemplate(ViewInstance viewInstance) {
 	

@@ -83,48 +83,48 @@ class LitiersesControllerTemplate extends SimpleTemplate<Controller> {
 				public class «controller.name.toFirstUpper» {
 					
 					«FOR method : controller.actions /* Se declaran los metodos relacionados como acciones del controlador*/»
-					public static void «method.name»(Activity activity«FOR param : method.parameters SEPARATOR ','»«IF param.type.collection» ,ArrayList <«param.type.containedTypeSpecification.name»>  «param.name.toFirstLower»«ELSE» , «param.type.typeSpecification.typeSpecificationString.toFirstUpper» «param.name.toFirstLower»«ENDIF»«ENDFOR»){
-						«writeStatements(method.body)»	
-					}
-				«ENDFOR»
-					
-					«/* Se los metodos set y get para los atributos declarados respectivamente*/»
-					«FOR attr : neededAttributes.entrySet»
-						«IF attr.value.isCollection»
-							/**
-							 * Returns the current value for the attribute «attr.key»
-							 *
-							 * @return current instance for «attr.key.toFirstLower» attribute
-							 */
-							public «getCollectionString(attr.value as ParameterizedType)»<«(attr.value as ParameterizedType).typeParameters.get(0).typeSpecification.typeSpecificationString»> get«attr.key.toFirstUpper»(){						
-								return «attr.key.toFirstLower»;
-							}
-							
-							/**
-							 * Sets the value for the attribute «attr.key»
-							 * @param «attr.key.toFirstLower» The value to set
-							 */
-							public void set«attr.key.toFirstUpper»(«getCollectionString(attr.value as ParameterizedType)»<«(attr.value as ParameterizedType).typeParameters.get(0).typeSpecification.typeSpecificationString»> «attr.key.toFirstLower»){
-								this.«attr.key.toFirstLower»=«attr.key.toFirstLower»;
-							}
-						«ELSE»
-							/**
-							 * Returns the current value for the attribute «attr.key»
-							 * @return current instance for «attr.key.toFirstLower» attribute
-							 */
-							public «attr.value.typeSpecification.typeSpecificationString.toFirstUpper» get«attr.key.toFirstUpper»(){
-								return «attr.key.toFirstLower»;
-							}
-							
-							/**
-							 * Sets the value for the attribute «attr.key»
-							 * @param «attr.key.toFirstLower» The value to set
-							 */
-							public void set«attr.key.toFirstUpper»(«attr.value.typeSpecification.typeSpecificationString.toFirstUpper» «attr.key.toFirstLower»){
-								this.«attr.key.toFirstLower»=«attr.key.toFirstLower»;
-							}
-						«ENDIF»
-					«ENDFOR»
+									public static void «method.name»(Activity activity«FOR param : method.parameters SEPARATOR ','»«IF param.type.collection» ,ArrayList <«param.type.containedTypeSpecification.name»>  «param.name.toFirstLower»«ELSE» , «param.type.typeSpecification.typeSpecificationString.toFirstUpper» «param.name.toFirstLower»«ENDIF»«ENDFOR»){
+										«writeStatements(method.body)»	
+									}
+								«ENDFOR»
+									
+									«/* Se los metodos set y get para los atributos declarados respectivamente*/»
+									«FOR attr : neededAttributes.entrySet»
+										«IF attr.value.isCollection»
+											/**
+											 * Returns the current value for the attribute «attr.key»
+											 *
+											 * @return current instance for «attr.key.toFirstLower» attribute
+											 */
+											public «getCollectionString(attr.value as ParameterizedType)»<«(attr.value as ParameterizedType).typeParameters.get(0).typeSpecification.typeSpecificationString»> get«attr.key.toFirstUpper»(){						
+												return «attr.key.toFirstLower»;
+											}
+											
+											/**
+											 * Sets the value for the attribute «attr.key»
+											 * @param «attr.key.toFirstLower» The value to set
+											 */
+											public void set«attr.key.toFirstUpper»(«getCollectionString(attr.value as ParameterizedType)»<«(attr.value as ParameterizedType).typeParameters.get(0).typeSpecification.typeSpecificationString»> «attr.key.toFirstLower»){
+												this.«attr.key.toFirstLower»=«attr.key.toFirstLower»;
+											}
+										«ELSE»
+											/**
+											 * Returns the current value for the attribute «attr.key»
+											 * @return current instance for «attr.key.toFirstLower» attribute
+											 */
+											public «attr.value.typeSpecification.typeSpecificationString.toFirstUpper» get«attr.key.toFirstUpper»(){
+												return «attr.key.toFirstLower»;
+											}
+											
+											/**
+											 * Sets the value for the attribute «attr.key»
+											 * @param «attr.key.toFirstLower» The value to set
+											 */
+											public void set«attr.key.toFirstUpper»(«attr.value.typeSpecification.typeSpecificationString.toFirstUpper» «attr.key.toFirstLower»){
+												this.«attr.key.toFirstLower»=«attr.key.toFirstLower»;
+											}
+										«ENDIF»
+									«ENDFOR»
 					«FOR service : controller.services»
 						public «IF service.type.typeSpecification.typeSpecificationString == "Persistence"» static «FOR param: (service.type as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»«'__General__'»«ELSE» «service.type.typeSpecification.typeSpecificationString.toFirstUpper»«ENDIF» «IF service.name != null»get«service.name.toFirstUpper»«ELSE»get«service.type.typeSpecification.
 							name.toFirstUpper»«ENDIF»(){

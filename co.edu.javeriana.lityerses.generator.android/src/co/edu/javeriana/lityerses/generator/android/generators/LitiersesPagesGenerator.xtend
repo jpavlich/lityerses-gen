@@ -16,7 +16,7 @@ class LitiersesPagesGenerator extends SimpleGenerator<Page> {
 	}
 
 	override protected getFileName(Page e) {
-		return e.eContainer?.fullyQualifiedName.toString("/").toLowerCase + "/" + e.name + ".xhtml"
+		return e.eContainer?.fullyQualifiedName.toString("/").toLowerCase + "/" + e.name + "_Activity.java"
 	}
 
 	override getTemplate() {
