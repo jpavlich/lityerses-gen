@@ -9,11 +9,16 @@ import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesGen
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceImplementationGenerator
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceInterfaceGenerator
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceServerGenerator
+import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesFragmentGenerator
+import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesLayoutGenerator
 
 class LitiersesGenerator extends GeneratorSuite{
 	
     @OutputConfiguration
 	public static final String PAGES = "pages";
+	
+	@OutputConfiguration
+	public static final String LAYOUT = "layout";
 
 	@OutputConfiguration
 	public static final String BACKING_BEANS = "backing.beans"
@@ -32,11 +37,13 @@ class LitiersesGenerator extends GeneratorSuite{
 		#{			
 			new LitiersesControllerGenerator,
 			new LitiersesPagesGenerator,
-			new LitiersesFacesConfigXMLGenerator,
+			new LitiersesPagesFragmentGenerator,
+			//new LitiersesFacesConfigXMLGenerator,
 			new LitiersesServiceInterfaceGenerator,
 			new LitiersesServiceImplementationGenerator,			
-			new LitiersesDesignGenerator,
-			new LitiersesServiceServerGenerator
+			//new LitiersesDesignGenerator,
+			new LitiersesServiceServerGenerator,
+			new LitiersesPagesLayoutGenerator
 		}
 	}
 	
