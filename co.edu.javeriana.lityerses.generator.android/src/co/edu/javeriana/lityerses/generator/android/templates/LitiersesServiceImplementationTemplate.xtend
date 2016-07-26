@@ -102,8 +102,10 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 			«FOR feature : service.features»
 				«IF feature instanceof Method»«
 				/*VARIABLES: */
-					val ParametroRetorno_tipoCompleto = (service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")»«
-					val ParametroRetorno_tipo = (service.getReplacedType(feature.type).writeType(false)).replace("Array","ArrayList")»«
+					var ParametroRetorno_tipoCompleto = (service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")»«
+					var ParametroRetorno_tipo = (service.getReplacedType(feature.type).writeType(false)).replace("Array","ArrayList")»«
+					var Retorno_tipo_simple = false»«
+					var inicializacion = ""»«
 					var ListaTipoParametrosEntrada = ''»«
 					var ListaTipoParametrosEntrada_ = ''»«
 					var ListaNombreParametrosEntrada = ''»«
@@ -134,21 +136,54 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 					»
 					
 				@Override
+				«for (var i=0; i<1;i++) { /*tipo de dato de retorno */
+					//if (service.getReplacedType(feature.type) instanceof Entity || (service.getReplacedType(feature.type).collection)) 
+					if (ParametroRetorno_tipoCompleto.equals("Boolean")||ParametroRetorno_tipoCompleto.equals("String")||ParametroRetorno_tipoCompleto.equals("Long")||ParametroRetorno_tipoCompleto.equals("Int"))
+					{
+						Retorno_tipo_simple = true
+						ParametroRetorno_tipoCompleto = ParametroRetorno_tipoCompleto.toLowerCase
+						ParametroRetorno_tipo = ParametroRetorno_tipo.toLowerCase
+						switch (ParametroRetorno_tipo) {
+							case "int": inicializacion = "0"
+							case "boolean": inicializacion = "false"
+							case "long": inicializacion = "0"
+							case "string": inicializacion = "" 
+						}
+						
+						switch (ParametroRetorno_tipo) {
+							case "int": ParametroRetorno_tipoCompleto = "Integer"
+							case "boolean": ParametroRetorno_tipoCompleto = "Boolean"
+							case "long": ParametroRetorno_tipoCompleto = "Long"
+							case "string": ParametroRetorno_tipoCompleto = "String" 
+						}
+						
+						
+					}
+				} 
+				»
+				«IF Retorno_tipo_simple == true»
+				public «ParametroRetorno_tipo» «feature.name»(«ListaParametrosEntrada»){
+				«ELSE»
 				public «ParametroRetorno_tipoCompleto» «feature.name»(«ListaParametrosEntrada»){
+				«ENDIF»	
 				«IF !feature.body.empty»
 				«ENDIF»
 					«IF !feature.type.typeSpecification.name.equalsIgnoreCase("Void")»
-					«ParametroRetorno_tipoCompleto» retorno = new «ParametroRetorno_tipo»();
-					try{
-						retorno = («ParametroRetorno_tipo») new ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»().execute(«ListaNombreParametrosEntrada»).get();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} catch (ExecutionException e) {
-						e.printStackTrace();
-					}	
-					return retorno;
+						«IF Retorno_tipo_simple == true»
+							«ParametroRetorno_tipo» retorno = «inicializacion»;
+						«ELSE»
+							«ParametroRetorno_tipoCompleto» retorno = new «ParametroRetorno_tipo»();	
+						«ENDIF»
+						try{
+							retorno = («ParametroRetorno_tipo») new ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»().execute(«ListaNombreParametrosEntrada»).get();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							e.printStackTrace();
+						}	
+						return retorno;
 					«ELSE»
-					new ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»().execute(«ListaNombreParametrosEntrada»);
+						new ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»().execute(«ListaNombreParametrosEntrada»);
 					«ENDIF»«
 		/*Clase Asincrona */»
 				}
@@ -159,6 +194,7 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 					protected «ParametroRetorno_tipoCompleto.toFirstUpper» doInBackground(«ListaTipoParametrosEntrada»... args) {
 						String params = "";
 						String url_servicio = urlWebservice+"ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»/";
+						Log.d("Sentencia", url_servicio);
 						JSONArray json_retorno = null;
 						«//SI HAY PARAMETROS DE ENTRADA
 						IF parametroEntrada==true»
@@ -172,27 +208,33 @@ class LitiersesServiceImplementationTemplate extends SimpleTemplate<Service> {
 						}
 						params = jsonObject.toString();
 						Log.d("Sentencia:", "........................ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»,..params: " + params);
-						Log.d("Sentencia", url_servicio);
 						«ENDIF»
 						«// SI HAY PARAMETROS PARA RETORNAR
 						IF !ParametroRetorno_tipo.equals("void")»
-						«ParametroRetorno_tipoCompleto» retorno = new «ParametroRetorno_tipo»();
-						
+							«IF Retorno_tipo_simple == true»
+								«ParametroRetorno_tipo» retorno = «inicializacion»;
+							«ELSE»
+								«ParametroRetorno_tipoCompleto» retorno = new «ParametroRetorno_tipo»();
+							«ENDIF»	
 						«ENDIF»
 						try {
 							«IF ParametroRetorno_tipo.equals("void")»	
 							jParser.makeHttpRequest(url_servicio, "POST", params);
 							«ELSE»
-							json_retorno = jParser.makeHttpRequest(url_servicio, "POST", params);
-							Log.d("Retorno : ", json_retorno.toString());
-							for (int i = 0; i < json_retorno.length(); i++) {
-								JSONObject c = json_retorno.getJSONObject(i);
-								Gson gson = new Gson();
-								//si es coleccion
-								Type retornoType = (Type) clazzTObject;
-								T objeto = gson.fromJson(c.toString(),retornoType);
-								retorno.add(objeto);
-							}
+								«IF Retorno_tipo_simple == false»
+									json_retorno = jParser.makeHttpRequest(url_servicio, "POST", params);
+									Log.d("Retorno : ", json_retorno.toString());
+									for (int i = 0; i < json_retorno.length(); i++) {
+										JSONObject c = json_retorno.getJSONObject(i);
+										Gson gson = new Gson();
+										Type retornoType = (Type) clazzTObject;
+										T objeto = gson.fromJson(c.toString(),retornoType);
+										retorno.add(objeto);
+									}
+								«ELSE»
+									retorno = «ParametroRetorno_tipoCompleto».parse«ParametroRetorno_tipoCompleto»(jParser.makeHttpRequest_TextPlain(url_servicio, "POST", params));
+									Log.d("Retorno : ", retorno+"");
+								«ENDIF»	
 							«ENDIF»
 						} catch (Exception e) {
 							Log.d("Error de conexion", "------------------ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»,ERROR DE CONEXION CON LA BASE DE DATOS --------------");

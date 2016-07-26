@@ -11,6 +11,10 @@ import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceI
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesServiceServerGenerator
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesFragmentGenerator
 import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesLayoutGenerator
+import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesLayoutFragmentGenerator
+import co.edu.javeriana.lityerses.generator.android.generators.LitiersesPagesLayoutFragmentGenerator_complex
+import co.edu.javeriana.lityerses.generator.android.generators.LitiersesAndroidManifestGenerator
+import co.edu.javeriana.isml.isml.Controller
 
 class LitiersesGenerator extends GeneratorSuite{
 	
@@ -31,6 +35,10 @@ class LitiersesGenerator extends GeneratorSuite{
 	
 	@OutputConfiguration
 	public static final String SERVICE_SERVER = "service.server"
+	
+	@OutputConfiguration
+	public static final String MANIFEST = "manifest"
+	
 		
 
 	override getGenerators() {
@@ -43,7 +51,10 @@ class LitiersesGenerator extends GeneratorSuite{
 			new LitiersesServiceImplementationGenerator,			
 			//new LitiersesDesignGenerator,
 			new LitiersesServiceServerGenerator,
-			new LitiersesPagesLayoutGenerator
+			new LitiersesPagesLayoutGenerator,
+			new LitiersesPagesLayoutFragmentGenerator,
+			new LitiersesPagesLayoutFragmentGenerator_complex,
+			new LitiersesAndroidManifestGenerator
 		}
 	}
 	

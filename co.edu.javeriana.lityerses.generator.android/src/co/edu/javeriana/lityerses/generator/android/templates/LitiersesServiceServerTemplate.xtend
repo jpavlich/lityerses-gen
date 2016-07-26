@@ -46,9 +46,11 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 			«FOR feature : service.features»
 				«IF feature instanceof Method»«
 			/*VARIABLES: */
-				val ParametroRetorno_tipoCompleto = (service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")»«
-				val ParametroRetorno_tipo = (service.getReplacedType(feature.type).writeType(false)).replace("Array","ArrayList")»«
+				var ParametroRetorno_tipoCompleto = (service.getReplacedType(feature.type).writeType(true)).replace("Array","List")»«
+				var ParametroRetorno_tipo = (service.getReplacedType(feature.type).writeType(false)).replace("Array","ArrayList")»«
 				var ListaTipoParametrosEntrada = ''»«
+				var Retorno_tipo_simple = false»«
+				var inicializacion = ""»«
 				var ListaTipoParametrosEntrada_ = ''»«
 				var ListaNombreParametrosEntrada = ''»«
 				var ListaParametrosEntrada = ''»«
@@ -76,6 +78,31 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 						ListaTipoParametrosEntrada_ = 'Void'}}»«
 			/*VARIABLES: */
 				»
+				«for (var i=0; i<1;i++) { /*tipo de dato de retorno */
+									//if (service.getReplacedType(feature.type) instanceof Entity || (service.getReplacedType(feature.type).collection)) 
+									if (ParametroRetorno_tipoCompleto.equals("Boolean")||ParametroRetorno_tipoCompleto.equals("String")||ParametroRetorno_tipoCompleto.equals("Long")||ParametroRetorno_tipoCompleto.equals("Int"))
+									{
+										Retorno_tipo_simple = true
+										ParametroRetorno_tipoCompleto = ParametroRetorno_tipoCompleto.toLowerCase
+										ParametroRetorno_tipo = ParametroRetorno_tipo.toLowerCase
+										switch (ParametroRetorno_tipo) {
+											case "int": inicializacion = "0"
+											case "boolean": inicializacion = "false"
+											case "long": inicializacion = "0"
+											case "string": inicializacion = "" 
+										}
+										
+										switch (ParametroRetorno_tipo) {
+											case "int": ParametroRetorno_tipoCompleto = "Integer"
+											case "boolean": ParametroRetorno_tipoCompleto = "Boolean"
+											case "long": ParametroRetorno_tipoCompleto = "Long"
+											case "string": ParametroRetorno_tipoCompleto = "String" 
+										}
+										
+										
+									}
+								} 
+								»
 				@POST
 				@Path("ws_«ParametroRetorno_tipo.toLowerCase»_«feature.name»_«ListaTipoParametrosEntrada_.toLowerCase»")
 				«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
@@ -84,12 +111,19 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 				«IF parametroEntrada==true»
 				@Consumes({"application/json"})	
 				«ENDIF»	
-				public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","List")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
-				
+				«IF Retorno_tipo_simple == true»
+					public «ParametroRetorno_tipo» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
+				«ELSE»	
+					public «ParametroRetorno_tipoCompleto» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
+				«ENDIF»
 					//Sección para implementar el método
 					
 					«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
-					return null;
+						«IF Retorno_tipo_simple == true»
+							return «inicializacion»;
+						«ELSE»
+							return null;
+						«ENDIF»
 					«ENDIF»
 					
 				}

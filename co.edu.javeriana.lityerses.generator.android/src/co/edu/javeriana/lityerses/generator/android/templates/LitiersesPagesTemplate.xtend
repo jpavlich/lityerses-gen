@@ -103,7 +103,7 @@ class LitiersesPagesTemplate extends SimpleTemplate<Page> {
 		 		 			«FOR sta : method.showStatements»
 		 		 				«IF sta.expression.class== ViewInstanceImpl»
 		 		 					«IF (page.name).equals((sta.expression as Instance).type.typeSpecification.typeSpecificationString.toFirstUpper)»
-// Invocación del método por default del controlador
+// Invocacion del metodo por default del controlador
 			 if («FOR param : page.parameters»«(param.name)»«ENDFOR» == null) { «page.containerController.name».«method.name»(this); }
 		 		 					«ENDIF»
 		 		 				«ENDIF»	

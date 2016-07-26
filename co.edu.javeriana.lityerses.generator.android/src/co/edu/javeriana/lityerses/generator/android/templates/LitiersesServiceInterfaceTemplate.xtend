@@ -52,8 +52,15 @@ class LitiersesServiceInterfaceTemplate extends SimpleTemplate<Service> {
 			
 			«FOR feature : service.features»
 				«IF feature instanceof Method»
-					public «(service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»);
-
+					«var tipo_retorno = (service.getReplacedType(feature.type).writeType(true)).replace("Array","ArrayList")»
+					«for (var i=0; i<1;i++) { /*tipo de dato de retorno */
+						if (service.getReplacedType(feature.type) instanceof Entity || (service.getReplacedType(feature.type).collection)) 
+							{tipo_retorno = tipo_retorno}
+						else
+						{tipo_retorno = tipo_retorno.toLowerCase}
+					} 
+					»
+					public «tipo_retorno» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»);
 				«ELSE»
 					«IF feature instanceof Attribute»
 						public «service.getReplacedType(feature.type).writeType(true)» get«feature.name.toFirstUpper»();

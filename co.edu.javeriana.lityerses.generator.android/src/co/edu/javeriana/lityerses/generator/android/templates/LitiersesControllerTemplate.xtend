@@ -26,6 +26,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import co.edu.javeriana.isml.isml.MethodStatement
 import co.edu.javeriana.isml.isml.Instance
 import co.edu.javeriana.isml.isml.NullValue
+import co.edu.javeriana.lityerses.generator.android.LitiersesGenerator
+import co.edu.javeriana.isml.isml.Attribute
 
 /**
  * Clase para la generación de controladores en la plataforma Java.
@@ -51,7 +53,7 @@ class LitiersesControllerTemplate extends SimpleTemplate<Controller> {
 	 *
 	 */
 	override preprocess(Controller controller) {
-
+		
 	}
 	
 	
@@ -68,13 +70,28 @@ class LitiersesControllerTemplate extends SimpleTemplate<Controller> {
 				package «controller.eContainer.fullyQualifiedName»;
 						
 				import android.app.Activity;
-				
-				«FOR entity : getNeededImportsInActions(controller).entrySet»
-					«IF  entity.value.class.simpleName=="EntityImpl" && entity.value.typeSpecificationString != "Query" && entity.value.typeSpecificationString != "Convert"»
+				«FOR contenido : controller.eContents /*Import de servicios */»
+					«IF contenido instanceof Attribute»
+						«IF (contenido as Attribute).type instanceof ParameterizedType »	
+							«var entidad = ((contenido as Attribute).type as ParameterizedType).typeParameters.get(0).referencedElement»						
+							«IF entidad instanceof Entity»
+								import «entidad.eContainer.fullyQualifiedName».«entidad.name»;
+								«var servicio = ((contenido as Attribute).type as ParameterizedType).referencedElement»
+								«IF servicio.name.equals("Persistence")»
+									import «entidad.eContainer.fullyQualifiedName».services.«entidad.name»__General__;
+								«ELSE»
+									import «servicio.eContainer.fullyQualifiedName».«servicio.name»;
+								«ENDIF»
+							«ENDIF»
+						«ENDIF»
+					«ENDIF»
+				«ENDFOR»
+				«FOR entity : getNeededImportsInActions(controller).entrySet»«
+					/*IF  entity.value.class.simpleName=="EntityImpl" && entity.value.typeSpecificationString != "Query" && entity.value.typeSpecificationString != "Convert"»
 					import «entity.value.eContainer.fullyQualifiedName».services.«entity.value.name»__General__;
 					import «entity.value.eContainer.fullyQualifiedName».«entity.value.name»;
-					«ENDIF»
-					«IF  entity.value.class.simpleName=="PageImpl" && entity.value.typeSpecificationString != "Query" && entity.value.typeSpecificationString != "Convert"»
+					«ENDIF*/
+					»«IF  entity.value.class.simpleName=="PageImpl" && entity.value.typeSpecificationString != "Query" && entity.value.typeSpecificationString != "Convert"»
 					import «entity.value.eContainer.fullyQualifiedName».«entity.value.name»_Activity;
 					«ENDIF»
 				«ENDFOR»

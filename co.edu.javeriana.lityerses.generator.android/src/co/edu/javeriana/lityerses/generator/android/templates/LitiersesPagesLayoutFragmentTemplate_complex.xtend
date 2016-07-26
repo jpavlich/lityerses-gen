@@ -26,30 +26,20 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import co.edu.javeriana.isml.isml.impl.ImportImpl
 import co.edu.javeriana.isml.isml.Instance
 import co.edu.javeriana.isml.isml.impl.ViewInstanceImpl
-import co.edu.javeriana.isml.isml.impl.VariableReferenceImpl
 
-
-class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
+class LitiersesPagesLayoutFragmentTemplate_complex extends SimpleTemplate<ForView> {
 	@Inject extension TypeChecker
 	@Inject extension IsmlModelNavigation	
 	@Inject extension ExpressionTemplate
 	@Inject extension IQualifiedNameProvider
 	@Inject extension StatementTemplate
 	int i;
-	String actualizacionEditText;
-	
-	//Variables para  crear subclase por datatable
-	ViewInstance table_subclass;
-	String tableid;
-	
-	
 	Map<ViewInstance,String> forms
 	
 	int j;
 
-	override preprocess(Page e) {
+	override preprocess(ForView e) {
 		i = 1;
-		actualizacionEditText="";
 			
 		forms=new HashMap
 	}
@@ -59,71 +49,40 @@ class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
  * Metodo que retorna la plantilla para  paginas con elementos graficos del framework prime faces 
  * 
  */
-	override def CharSequence template(Page page) '''	
-	package «(page.eContainer.fullyQualifiedName)»;
-	import android.app.Activity;
-	import android.os.Bundle;
-	import android.support.v4.app.Fragment;
-	import android.view.LayoutInflater;
-	import android.view.View;
-	import android.view.ViewGroup;
-	import com.example.android.xyztouristattractions.R;
-	import java.io.Serializable;
-	«FOR imports : page.eContainer.eContents /*Se importan los imports de la pagina isml */»
-			«IF imports.class == ImportImpl»
-				import  «imports.cast(ImportImpl).importedPackage.name».*;
-			«ENDIF»
-	«ENDFOR»
-	//Componentes graficos
-	import android.widget.Button;                                       
-	import android.widget.TextView;  
-	import android.widget.EditText;
-	//Imports para lista
-	import android.widget.ListView;
-	import java.util.ArrayList;
-	import android.content.Context;
-	import android.widget.BaseAdapter;
+	override def CharSequence template(ForView forview) '''	
+	<?xml version="1.0" encoding="utf-8"?>
 	
-	public class «(page.name)»_Fragment extends Fragment {
-		
-		«FOR param : page.parameters»
-			private static final String EXTRA_OBJECT_«(param.name).toUpperCase» = "«(page.name)»_object_«(param.name)»";
-			private «IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF» «(param.name)»;
-		«ENDFOR»
-		
-	    public static «(page.name)»_Fragment createInstance(«FOR param : page.parameters SEPARATOR ','»«IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF» «(param.name)»«ENDFOR») {
-	        «(page.name)»_Fragment detailFragment = new «(page.name)»_Fragment();
-	        Bundle bundle = new Bundle();
-	        «FOR param : page.parameters»
-	        	bundle.putSerializable(EXTRA_OBJECT_«(param.name).toUpperCase», (Serializable) «(param.name)»);
-	        «ENDFOR»
-	        detailFragment.setArguments(bundle);
-	        return detailFragment;
-	    } 
-	    
-	    public «(page.name)»_Fragment() {}
-	    
-	    @Override
-	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                                 Bundle savedInstanceState) {
-	    	setHasOptionsMenu(true);
-	        View view = inflater.inflate(R.layout.«(page.name).toLowerCase»_fragment, container, false);
-	        «FOR param : page.parameters»
-	        «(param.name)» = («IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF») getArguments().getSerializable(EXTRA_OBJECT_«(param.name).toUpperCase»);
-	        if («(param.name)» == null) { getActivity().finish();       return null;     }
-	        «ENDFOR»
-	    //elementos graficos    
-	        «IF page.body != null»
-	        	«widgetTemplate(page.body)»
-	        «ENDIF»	
-	    	return view;
-	    }
-	}
-«IF table_subclass != null»
-	«dataTable_newClass»
-«ENDIF»
+	<android.support.design.widget.CoordinatorLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:app="http://schemas.android.com/apk/res-auto"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
+	
+	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:weightSum="100">
+	«var current = EObject.cast(forview)»
+	«while (current != null && !(current instanceof ViewInstance) ) {
+		current = current.eContainer
+		i++ //aumento del identificador i = 1;
+	}»
+	«IF (current as ViewInstance).type.referencedElement.name.equals("DataTable") /*SI ES EL DETALLE DE UN DATATABLE*/»
+	«FOR pair : (current as ViewInstance).getColumnsDataTable.entrySet»
+		«val viewInstance = pair.key as ViewInstance»
+				«/*ENCABEZADOS DEL TABLE widgetTemplate(viewInstance)*/»
+				«widgetTemplate(pair.value)»
+	«ENDFOR»
+	«ENDIF»
+	    </LinearLayout>
+	
+	</android.support.design.widget.CoordinatorLayout>
+	
 	'''
-
+	
+	
+	
 	def dispatch CharSequence widgetTemplate(ViewInstance viewInstance) {
 	
 		switch (viewInstance.type.typeSpecification.typeSpecificationString) {
@@ -257,34 +216,31 @@ class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
 	
 	def CharSequence label(ViewInstance part) '''
 		«var idLabel=part.id »
-		TextView «idLabel» = (TextView) view.findViewById(R.id.«idLabel»);
-		«IF part.actionCall==null»
-		«idLabel».setText(«part.parameters.get(0).valueTemplateLity»);
-		«ELSE»
-		«idLabel».setText(«part.parameters.get(0).valueTemplateLity»+"");
-		«ENDIF»
-		
+		<TextView
+		    android:id="@+id/«idLabel»"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="@dimen/small_margin"
+		    android:maxLines="1"
+		    style="?android:textAppearanceSmall"
+		    android:text="" />
 		'''
-		
-		
 		
 /**
 	 * Metodo para generar elementos de tipo cajas de texto
 	 * 
 	 */
-	def CharSequence inputText(ViewInstance part) 
-	
-	'''
-	 	«var idLabel=part.id »
-	 	final EditText «idLabel» = (EditText) view.findViewById(R.id.«idLabel»);
-	 	«IF part.actionCall==null»
-	 		«idLabel».setText(«part.parameters.get(1).valueTemplateLity»);
-	 		«/*String para los botones*/for (var i=0; i<1;i++){if (1==1){
-	 			{actualizacionEditText = actualizacionEditText+"\n"+part.parameters.get(1).valueTemplateLity_SET+"("+idLabel+".getText()+\"\");"}
-	 		}}»
-	 	«ELSE»
-	 		«idLabel».setText(«part.parameters.get(1).valueTemplateLity»);
-	 	«ENDIF»
+	def CharSequence inputText(ViewInstance part) '''
+	«var idLabel=part.id »
+	<EditText
+		android:id="@+id/«idLabel»"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/small_margin"
+		android:maxLines="1"
+		style="?android:textAppearanceSmall"
+		android:text=""
+		android:hint=«part.parameters.get(0).writeExpression» />
 	'''
 		 
 		/**
@@ -293,28 +249,11 @@ class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
 	 */
 	def CharSequence button(ViewInstance part) '''
 	«var buttonid=part.id»
-	Button «buttonid» = (Button)view.findViewById(R.id.«buttonid»);
-	«IF (part.eContainer instanceof ForView)»«buttonid».setTag(position);«ENDIF»
-	«buttonid».setOnClickListener(new View.OnClickListener() {
-	    @Override
-	    public void onClick(View v) {
-	    	«IF !part.actionCall.parameters.empty»
-	    		«actualizacionEditText»
-	    	«ENDIF»
-	    	«IF !(part.eContainer instanceof ForView)»
-	    		«part.containerController.name».«part.actionCall?.action?.name»(getActivity()«FOR param:part.actionCall.parameters»,«IF param instanceof VariableReference && (param as VariableReference).referencedElement.eContainer instanceof Page»«/*(part.findAncestor(Page)as Page).controller.name.toFirstLower*/»«ENDIF»«writeExpression(param)»«ENDFOR»);
-	    	«ELSE»
-	    		«part.containerController.name».«part.actionCall?.action?.name»(getActivity()«
-    		IF part.eContainer instanceof ForView»«
-    	    	FOR contenido:part.eContainer.eContents»«
-					IF contenido instanceof VariableReference», «
-						(contenido as VariableReference).referencedElement.name».get(Integer.parseInt(v.getTag()+"")));«
-					ENDIF»«
-				ENDFOR»«
-    		ENDIF»
-	    	«ENDIF»
-	    }
-	});
+	<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text=«part.parameters.get(0).writeExpression»
+			android:id="@+id/«buttonid»" />
 	'''	
 	
 	/**
@@ -337,12 +276,9 @@ class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
 	
 	def CharSequence form(ViewInstance viewInstance) '''
 		«val id=viewInstance.id»
-		«forms.put(viewInstance,id)»
-		{
-				«FOR partBlock : viewInstance.getBody»
-				«widgetTemplate(partBlock)»
-				«ENDFOR»
-		}
+		«FOR partBlock : viewInstance.getBody»
+		«widgetTemplate(partBlock)»
+		«ENDFOR»
 	'''
 /**
 	 * Metodo para generar elementos graficos de tipo mapa
@@ -434,81 +370,14 @@ class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
 	 */
 	
 	def CharSequence dataTable(ViewInstance table) '''
-		«for  (var i=0; i<1;i++) {tableid = table.id;table_subclass = table;}»
-		ListView «tableid» = (ListView) view.findViewById(R.id.«tableid»);
-		Adapter«tableid.toFirstUpper» mAdapter«tableid.toFirstUpper» = new Adapter«tableid.toFirstUpper»(getActivity()«
-				FOR contenido:table.forViewInBody.eContents»«
-					IF contenido instanceof VariableReference», «
-					(contenido as VariableReference).referencedElement.name»«
-					ENDIF»«
-				ENDFOR
-			»);	
-		«tableid».setAdapter(mAdapter«tableid.toFirstUpper»);
-		'''
+		«var tableid = table.id»
+		<ListView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/«tableid»"
+		        android:layout_gravity="center_horizontal" />
 		
-
-	def CharSequence dataTable_newClass () '''
-	/*****************************************************************************************************
-	    CLASE PARA «tableid.toUpperCase» «/*table_subclass*/»
-	*****************************************************************************************************/
-	«var variableTipo = ""»
-	«var variablenombre = ""»
-	class Adapter«tableid.toFirstUpper» extends BaseAdapter {
-		
-		«FOR contenido:table_subclass.forViewInBody.eContents»
-			«IF contenido instanceof VariableReference»
-				«FOR param : table_subclass.containerPage.parameters»
-					public «IF param.type.collection»ArrayList<«(param.type.containedTypeSpecification.name)»>«ELSE»«(param.type.referencedElement.name)»«ENDIF» «(contenido as VariableReference).referencedElement.name»;
-					«for  (var i=0; i<1;i++) {
-						variableTipo = "ArrayList<"+(param.type.containedTypeSpecification.name)+">";
-						variablenombre = (contenido as VariableReference).referencedElement.name;
-					}»
-				«ENDFOR»
-			«ENDIF»
-		«ENDFOR»
-		private Context mContext;
-		private Activity activity;
-		
-		public Adapter«tableid.toFirstUpper» (Activity act, «variableTipo» «variablenombre») {
-			super();
-			mContext = act;
-			this.«variablenombre» = «variablenombre»;  
-			activity = act;                    
-		}
-		
-		public Activity getActivity(){
-			return activity;
-		}	
-		
-		@Override
-		public int getCount() {
-		return «variablenombre» == null ? 0 : «variablenombre».size();
-		}
-		
-	    @Override
-	    public Object getItem(int position) {
-	    	return «variablenombre».get(position);
-	    }
-	    
-		@Override
-		public long getItemId(int position) {       return position;  }
-		
-		@Override
-		public View getView(  int position, View convertView, ViewGroup parent) {
-		    View view = convertView;
-		    LayoutInflater inflater = LayoutInflater.from(mContext);
-		    view = inflater.inflate(R.layout.«(table_subclass.containerPage.name).toLowerCase»_fragment_detail, null);  
-		    «table_subclass.forViewInBody.variable.type.referencedElement.name» «table_subclass.forViewInBody.variable.name» = «variablenombre».get(position); 
-		    //*************** INICIALIZACION DE COMPONENTES GRAFICOS
-		    «FOR pair : table_subclass.getColumnsDataTable.entrySet»
-			«val viewInstance = pair.key as ViewInstance»
-					«/*ENCABEZADOS DEL TABLE widgetTemplate(viewInstance)*/»
-					«widgetTemplate(pair.value)»
-		    «ENDFOR»
-		    //***********************************
-		    return view;
-		}    
-	}
+		«»
 	'''
 	
 	
@@ -576,79 +445,6 @@ class LitiersesPagesFragmentTemplate extends SimpleTemplate<Page> {
 	 * Metodo para obtener asignar valores a los componentes 
 	 * 
 	 */
-	
-	def CharSequence valueTemplateLity(Expression expression){		
-		if(expression instanceof Reference){
-			if (expression instanceof ResourceReference){
-				return expression.writeExpression
-			}else if(expression instanceof VariableReference){
-				if (expression.referencedElement.findAncestor(ForView) != null){ 
-				 	//return ""+expression.writeExpression+""
-				 	var retorno =(expression as VariableReference).referencedElement.name+"";
-						for (cont : (expression).eContents)
-						{
-							 if(cont instanceof VariableReference){
-							 	retorno=retorno+".get"+((cont as VariableReference).referencedElement.name).toFirstUpper+"()+\"\"";
-							 }
-							 else
-							 {
-							 	retorno=retorno+"-valueTemplateLity no controlado1-";
-							 }
-						}
-						return retorno;	
-				} else {					
-					{
-						var retorno =(expression as VariableReference).referencedElement.name+"";
-						for (cont : (expression).eContents)
-						{
-							 if(cont instanceof VariableReference){
-							 	retorno=retorno+".get"+((cont as VariableReference).referencedElement.name).toFirstUpper+"()+\"\"";
-							 }
-							 else
-							 {
-							 	retorno=retorno+"-valueTemplateLity no controlado1-";
-							 }
-						}
-						return retorno;	
-					}	
-				}				
-			}
-		} else{
-			return expression.writeExpression
-		}
-	}
-	
-	def CharSequence valueTemplateLity_SET(Expression expression){		
-		if(expression instanceof Reference){
-			if (expression instanceof ResourceReference){
-				return expression.writeExpression
-			}else if(expression instanceof VariableReference){
-				if (expression.referencedElement.findAncestor(ForView) != null){ 
-				 	return "\""+"#{"+expression.writeExpression+"}"+"\""
-				} else {					
-					{
-						var retorno =(expression as VariableReference).referencedElement.name+"";
-						for (cont : (expression).eContents)
-						{
-							 if(cont instanceof VariableReference){
-							 	retorno=retorno+".set"+((cont as VariableReference).referencedElement.name).toFirstUpper;
-							 }
-							 else
-							 {
-							 	retorno=retorno+"-valueTemplateLity no controlado1-";
-							 }
-						}
-						return retorno;	
-					}	
-				}				
-			}
-		} else{
-			return expression.writeExpression
-		}
-	}
-	
-	
-	
 	
 	def CharSequence valueTemplate(Expression expression){		
 		if(expression instanceof Reference){
