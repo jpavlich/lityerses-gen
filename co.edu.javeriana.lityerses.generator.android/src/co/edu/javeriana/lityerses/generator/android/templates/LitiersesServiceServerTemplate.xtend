@@ -116,7 +116,7 @@ class LitiersesServiceServerTemplate extends SimpleTemplate<Service> {
 				«ELSE»	
 					public «ParametroRetorno_tipoCompleto» «feature.name»(«FOR parameter : feature.parameters SEPARATOR ','»«parameter.type.writeType(true)» «parameter.name.toFirstLower»«ENDFOR»){
 				«ENDIF»
-					//Sección para implementar el método
+					//Seccion para implementar el metodo
 					
 					«IF !(service.getReplacedType(feature.type).writeType(true)).equals("void")»
 						«IF Retorno_tipo_simple == true»

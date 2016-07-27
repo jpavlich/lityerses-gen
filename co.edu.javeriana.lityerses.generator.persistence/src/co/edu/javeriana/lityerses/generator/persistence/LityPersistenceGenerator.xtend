@@ -7,6 +7,8 @@ import co.edu.javeriana.lityerses.generator.persistence.generators.LityPersisten
 import co.edu.javeriana.lityerses.generator.persistence.generators.LityResourceBundleGenerator
 import co.edu.javeriana.lityerses.generator.persistence.generators.LityServiceGeneralGenerator
 import co.edu.javeriana.lityerses.generator.persistence.generators.LityServiceGeneralGeneratorServer
+import co.edu.javeriana.lityerses.generator.persistence.generators.LityServiceEntityGeneratorServer
+import co.edu.javeriana.lityerses.generator.persistence.generators.LityEntityDatabaseGeneratorServer
 
 /**
  * Generates code from your model files on save.
@@ -30,6 +32,12 @@ class LityPersistenceGenerator extends GeneratorSuite {
 	
 	@OutputConfiguration
 	public static final String SERVICE_SERVER = "service.server"
+	
+	@OutputConfiguration
+	public static final String ENTITY_SERVER = "entity.server"
+	
+	@OutputConfiguration
+	public static final String SCRIPT_SERVER = "script.server"
 		
 
 	override getGenerators() {
@@ -38,7 +46,9 @@ class LityPersistenceGenerator extends GeneratorSuite {
 			new LityResourceBundleGenerator,
 			new LityServiceGeneralGenerator,
 			new LityServiceGeneralGeneratorServer,
-			new LityPersistenceXmlGenerator
+			new LityPersistenceXmlGenerator,
+			new LityServiceEntityGeneratorServer,
+			new LityEntityDatabaseGeneratorServer
 		}
 	}
 
