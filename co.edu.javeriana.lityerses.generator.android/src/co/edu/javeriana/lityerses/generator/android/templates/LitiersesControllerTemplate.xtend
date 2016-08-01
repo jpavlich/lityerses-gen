@@ -77,11 +77,15 @@ class LitiersesControllerTemplate extends SimpleTemplate<Controller> {
 							«IF entidad instanceof Entity»
 								import «entidad.eContainer.fullyQualifiedName».«entidad.name»;
 								«var servicio = ((contenido as Attribute).type as ParameterizedType).referencedElement»
+								«/*
 								«IF servicio.name.equals("Persistence")»
 									import «entidad.eContainer.fullyQualifiedName».services.«entidad.name»__General__;
 								«ELSE»
 									import «servicio.eContainer.fullyQualifiedName».«servicio.name»;
-								«ENDIF»
+									import «entidad.eContainer.fullyQualifiedName».services.«entidad.name»__General__;
+								«ENDIF» */»
+								import «entidad.eContainer.fullyQualifiedName».services.«entidad.name»__«servicio.name»__;
+								
 							«ENDIF»
 						«ENDIF»
 					«ENDIF»
@@ -143,13 +147,9 @@ class LitiersesControllerTemplate extends SimpleTemplate<Controller> {
 										«ENDIF»
 									«ENDFOR»
 					«FOR service : controller.services»
-						public «IF service.type.typeSpecification.typeSpecificationString == "Persistence"» static «FOR param: (service.type as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»«'__General__'»«ELSE» «service.type.typeSpecification.typeSpecificationString.toFirstUpper»«ENDIF» «IF service.name != null»get«service.name.toFirstUpper»«ELSE»get«service.type.typeSpecification.
+						public static «FOR param: (service.type as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»__«(service.type as ParameterizedType).referencedElement.name»__ «IF service.name != null»get«service.name.toFirstUpper»«ELSE»get«service.type.typeSpecification.
 							name.toFirstUpper»«ENDIF»(){
-							«IF service.type.typeSpecification.typeSpecificationString == "Persistence"» 
-							return new «FOR param: (service.type as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»«'__General__'»();
-							«ELSE»
-							return «IF service.name != null»«service.name.toFirstLower»«ELSE»«service.name.toFirstLower»«ENDIF»;
-							«ENDIF»
+							return new «FOR param: (service.type as ParameterizedType).typeParameters SEPARATOR ','»«param.writeType(true)»«ENDFOR»__«(service.type as ParameterizedType).referencedElement.name»__();
 						}
 						«IF service.type.typeSpecification.typeSpecificationString != "Persistence"»
 							public void «IF service.name != null»set«service.name.toFirstUpper»«ELSE»set«service.

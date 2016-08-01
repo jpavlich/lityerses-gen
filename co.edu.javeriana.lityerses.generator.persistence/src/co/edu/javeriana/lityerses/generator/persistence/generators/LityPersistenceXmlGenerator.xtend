@@ -13,7 +13,7 @@ class LityPersistenceXmlGenerator  extends SimpleGenerator<List<Entity>>{
 	}
 	
 	override protected getOutputConfigurationName() {
-		LityPersistenceGenerator.PERSISTENCE_XML
+		//LityPersistenceGenerator.PERSISTENCE_XML
 	}
 	
 	override getTemplate() {

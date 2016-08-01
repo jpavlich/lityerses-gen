@@ -16,7 +16,7 @@ class LityResourceBundleGenerator extends SimpleGenerator<ResourceBundle> {
 					}
 
 	override getOutputConfigurationName() {
-		LityPersistenceGenerator.RESOURCE_BUNDLE
+		//LityPersistenceGenerator.RESOURCE_BUNDLE
 	}
 	
 	override getTemplate() {

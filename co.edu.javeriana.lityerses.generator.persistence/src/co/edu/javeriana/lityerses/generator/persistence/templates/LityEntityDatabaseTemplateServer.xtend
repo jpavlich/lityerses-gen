@@ -57,7 +57,7 @@ class LityEntityDatabaseTemplateServer extends SimpleTemplate<List<Entity>> {
 			«ENDIF»
 	  	«ENDFOR»
 	  	
-		CONSTRAINT id_dieta2_key PRIMARY KEY (id)
+		CONSTRAINT id_«entity.name.toLowerCase»_key PRIMARY KEY (id)
 	)
 	WITH (
 	  OIDS=FALSE

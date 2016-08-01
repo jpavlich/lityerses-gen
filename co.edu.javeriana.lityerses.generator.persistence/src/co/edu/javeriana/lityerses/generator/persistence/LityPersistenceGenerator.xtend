@@ -18,8 +18,8 @@ import co.edu.javeriana.lityerses.generator.persistence.generators.LityEntityDat
 class LityPersistenceGenerator extends GeneratorSuite {
 	
 	
-	@OutputConfiguration	
-	public static final String RESOURCE_BUNDLE="resource.bundle"
+	//@OutputConfiguration	
+	//public static final String RESOURCE_BUNDLE="resource.bundle"
 	
 	@OutputConfiguration
 	public static final String ENTITIES = "entities";
@@ -27,8 +27,8 @@ class LityPersistenceGenerator extends GeneratorSuite {
 	@OutputConfiguration
 	public static final String SERVICE_GENERAL = "service.general"
 
-	@OutputConfiguration
-	public static final String PERSISTENCE_XML = "persistencexml"
+	//@OutputConfiguration
+	//public static final String PERSISTENCE_XML = "persistencexml"
 	
 	@OutputConfiguration
 	public static final String SERVICE_SERVER = "service.server"
@@ -43,10 +43,10 @@ class LityPersistenceGenerator extends GeneratorSuite {
 	override getGenerators() {
 		#{
 			new LityEntityGenerator,			
-			new LityResourceBundleGenerator,
+			//new LityResourceBundleGenerator,
 			new LityServiceGeneralGenerator,
 			new LityServiceGeneralGeneratorServer,
-			new LityPersistenceXmlGenerator,
+			//new LityPersistenceXmlGenerator,
 			new LityServiceEntityGeneratorServer,
 			new LityEntityDatabaseGeneratorServer
 		}
